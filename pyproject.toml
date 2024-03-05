@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "dl-uz-push-s3"
+name = "src"
 version = "0.1.0"
 description = "Download a big file, unzip, and push to s3"
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.8.10"
 tqdm = "^4.66.2"
 boto3 = "^1.34.55"
 requests = "^2.31.0"
