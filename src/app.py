@@ -11,6 +11,9 @@ def download_file(url, download_dir, download_file):
     return ret_val
 
 def unzip_file(gz_file_path, unzipped_file_dir, unzipped_file):
+    if not os.path.exists(gz_file_path):
+        return "There is no existing downloaded file. The specified file does not exist: {}".format(gz_file_path)
+
     unzipper = FileUnzipper(gz_file_path, unzipped_file_dir, unzipped_file)
     ret_val = unzipper.unzip()
     return ret_val
@@ -31,12 +34,11 @@ def delete_files(file_paths):
 # Initialize Argument Parser
 parser = argparse.ArgumentParser(description="Download URL")
 # Add URL Argument
-parser.add_argument("url", type=str, help="URL to be processed")
-# Parse Arguments
+parser.add_argument("url", nargs='?', default=None, type=str, help="URL to be processed")
+
 args = parser.parse_args()
 # Access URL Argument Value
 url = args.url
-print("URL:", url)
 
 current_datetime = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 # URL and file paths
@@ -46,13 +48,18 @@ download_filename = "downloaded_file.gz"
 unzipped_file_dir = "./unzipped_files"
 unzipped_filename = f'output_{current_datetime}.json'
 bucket_name = 'kcbluecross20240301'
+#bucket_name = 'unzippedjsonfiles'
 
 # Download the file
-ret_val = download_file(url, download_dir, download_filename)
-print(ret_val)
-if ret_val != "File downloaded successfully.":
-    exit()
-
+if url != None:
+    print("Url", url)
+    ret_val = download_file(url, download_dir, download_filename)
+    print(ret_val)
+    if ret_val != "File downloaded successfully.":
+        exit()
+else:
+    print ('No Url specified. Will try to process an existing dowloaded file.')
+    
 # Unzip the file
 gz_file_path = os.path.join(download_dir, download_filename)
 ret_val = unzip_file(gz_file_path, unzipped_file_dir, unzipped_filename)

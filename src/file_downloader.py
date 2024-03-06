@@ -31,6 +31,8 @@ class FileDownloader:
                 return "Failed to download file."
 
             total_size = int(response.headers.get('content-length', 0))
+            if file_size > 0 and total_size == file_size:
+                return "File downloaded successfully." 
             with open(output_path, mode) as f:
                 with tqdm(total=total_size, unit='B', unit_scale=True, desc="Downloading", initial=file_size, ascii=True) as pbar:
                     for chunk in response.iter_content(chunk_size=1024):
