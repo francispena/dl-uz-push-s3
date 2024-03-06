@@ -45,7 +45,7 @@ download_dir = "./downloaded_files"
 download_filename = "downloaded_file.gz"
 unzipped_file_dir = "./unzipped_files"
 unzipped_filename = f'output_{current_datetime}.json'
-bucket_name = 'unzippedjsonfiles'
+bucket_name = 'kcbluecross20240301'
 
 # Download the file
 ret_val = download_file(url, download_dir, download_filename)
